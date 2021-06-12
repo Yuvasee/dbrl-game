@@ -29,7 +29,6 @@ export const MainMenu = observer(() => {
                     variant="contained"
                     color={option.color}
                     onClick={() => State.setScene(option.scene)}
-                    value={option.scene}
                 >
                     {option.text}
                 </Button>

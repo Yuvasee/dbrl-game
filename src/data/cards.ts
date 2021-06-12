@@ -1,5 +1,3 @@
-import { image } from "faker";
-
 import { CardDefinition } from "types/card";
 
 export type CardDefinitionId = "heavy_strike" | "cautious_hit" | "block";
@@ -9,23 +7,27 @@ export const cards: Record<CardDefinitionId, CardDefinition> = {
         id: "heavy_strike",
         name: "Heavy strike",
         text: "Hit it hard.",
-        imageUrl: image.abstract(60, 40),
+        imageUrl:
+            "https://i.picsum.photos/id/2/140/80.jpg?hmac=hCrKItSMsCKIPfnHtX-zcoRHUKfL3s4vep7HxFnhimM",
         rarity: "Common",
         actionCost: 1,
         damage: {
             min: 3,
             max: 5,
         },
+        block: 0,
         effects: [],
     },
     cautious_hit: {
         id: "cautious_hit",
         name: "Cautious hit",
         text: "Take care, defend yourself.",
-        imageUrl: image.abstract(60, 40),
+        imageUrl:
+            "https://i.picsum.photos/id/900/140/80.jpg?hmac=AZw_yR2Nxz2UL2b-YPa1sgIyarjixWTjnWOGtKyh3Lg",
         rarity: "Common",
         actionCost: 1,
         damage: 2,
+        block: 2,
         effects: [
             // Block
         ],
@@ -34,10 +36,15 @@ export const cards: Record<CardDefinitionId, CardDefinition> = {
         id: "block",
         name: "Block",
         text: "Fortify!",
-        imageUrl: image.abstract(60, 40),
+        imageUrl:
+            "https://i.picsum.photos/id/901/140/80.jpg?hmac=ghxuh7RbEHxXC_OGl51RztkFi_QKLtlsjTVYEHL3TwQ",
         rarity: "Common",
         actionCost: 1,
         damage: 0,
+        block: {
+            min: 3,
+            max: 5,
+        },
         effects: [
             // Block +
         ],

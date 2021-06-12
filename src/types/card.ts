@@ -1,6 +1,6 @@
 import { CardDefinitionId } from "data/cards";
 
-export type CardDamage =
+export type VariableValue =
     | number
     | {
           min: number;
@@ -18,6 +18,7 @@ export type CardDefinition = {
     imageUrl: string;
     rarity: CardRarity;
     actionCost: number;
-    damage: CardDamage;
+    damage: VariableValue;
+    block: VariableValue;
     effects: CardEffect[];
 };

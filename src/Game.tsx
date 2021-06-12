@@ -5,12 +5,12 @@ import { Container, styled } from "@material-ui/core";
 import { LoginModal } from "components/LoginModal";
 import { MainScene } from "components/MainScene";
 
-import State from "./state";
+import { State } from "./state";
 import { Scene } from "types/game";
 import { DeckScene } from "components/DeckScene";
 
 const Wrapper = styled(Container)({
-    height: "100%",
+    flexGrow: 1,
 });
 
 export const Game = observer(() => {

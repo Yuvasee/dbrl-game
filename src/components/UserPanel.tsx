@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import FaceIcon from "@material-ui/icons/Face";
 
-import State from "state";
+import { State } from "state";
 import { Box, styled } from "@material-ui/core";
 
 const Wrapper = styled(Box)({

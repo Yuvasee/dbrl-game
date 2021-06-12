@@ -7,7 +7,7 @@ import { Card } from "./Card";
 export type DeckSummary = Partial<Record<CardDefinitionId, number>>;
 
 export class Deck {
-    cards: Record<string, Card>;
+    cards: Partial<Record<string, Card>>;
 
     cardIds: string[];
 
@@ -17,6 +17,8 @@ export class Deck {
 
         makeAutoObservable(this);
     }
+
+    getCardById = (id: string) => this.cards[id];
 
     suffle = () => {
         this.cardIds = knuthShuffle(this.cardIds);

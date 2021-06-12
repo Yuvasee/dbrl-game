@@ -3,7 +3,7 @@ import { Button, Modal, Paper } from "@material-ui/core";
 import { styled } from "@material-ui/core/styles";
 
 import { makeFakeUser } from "fakes";
-import State from "state";
+import { State } from "state";
 
 const ModalPaper = styled(Paper)({
     maxWidth: "60%",

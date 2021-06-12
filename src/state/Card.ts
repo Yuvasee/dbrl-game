@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 import { CardDefinitionId, cards } from "data/cards";
 import { CardDefinition } from "types/card";
@@ -10,7 +10,7 @@ export class Card {
     definition: CardDefinition;
 
     constructor(definitionId: CardDefinitionId) {
-        this.id = uuid.v4();
+        this.id = uuidv4();
         this.definition = Card.getDefinitionById(definitionId);
 
         makeAutoObservable(this);
@@ -18,4 +18,24 @@ export class Card {
 
     static getDefinitionById = (id: CardDefinitionId): CardDefinition =>
         cards[id];
+
+    get damageText() {
+        const { damage } = this.definition;
+
+        if (!damage) return "";
+
+        return typeof damage === "number"
+            ? damage + ""
+            : `${damage.min}-${damage.max}`;
+    }
+
+    get blockText() {
+        const { block } = this.definition;
+
+        if (!block) return "";
+
+        return typeof block === "number"
+            ? block + ""
+            : `${block.min}-${block.max}`;
+    }
 }
