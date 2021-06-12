@@ -12,6 +12,7 @@ export class Card {
     constructor(definitionId: CardDefinitionId) {
         this.id = uuid.v4();
         this.definition = Card.getDefinitionById(definitionId);
+
         makeAutoObservable(this);
     }
 

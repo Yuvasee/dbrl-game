@@ -17,6 +17,7 @@ export class Battle {
             cautious_hit: 5,
             block: 5,
         });
+
         return new Battle(deck);
     };
 }

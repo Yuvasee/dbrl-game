@@ -28,7 +28,7 @@ export const DeckScene = observer(() => {
                 <>
                     <h1>Deck</h1>
                     {deck.cardIds.map((cardId) => (
-                        <CardPaper key={cardId} id={cardId} />
+                        <CardPaper key={cardId} cardId={cardId} />
                     ))}
                 </>
             )}
