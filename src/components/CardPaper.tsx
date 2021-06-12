@@ -1,17 +1,20 @@
-import { FC } from "react";
+import { CSSProperties, FC } from "react";
 import { observer } from "mobx-react-lite";
 import { styled, Card, CardMedia, Box } from "@material-ui/core";
 
 import { State } from "state";
 
+export const CARD_WIDTH = 140;
+export const CARD_HEIGHT = 200;
+
 export type CardPaperProps = {
     cardId: string;
+    style?: CSSProperties;
 };
 
 const Wrapper = styled(Card)({
-    width: 140,
-    height: 200,
-    margin: 5,
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
 });
 
 const CardHeader = styled(Box)({
@@ -81,13 +84,13 @@ const Text = styled(Box)({
     fontSize: 13,
 });
 
-export const CardPaper: FC<CardPaperProps> = observer(({ cardId }) => {
+export const CardPaper: FC<CardPaperProps> = observer(({ cardId, style }) => {
     const card = State.battle!.deck.getCardById(cardId);
 
     if (!card) throw new Error(`Card with id ${cardId} not found`);
 
     return (
-        <Wrapper elevation={5}>
+        <Wrapper elevation={5} style={style}>
             <CardHeader>
                 <ActionCost>{card.definition.actionCost}</ActionCost>
                 {card.damageText && <Damage>{card.damageText}</Damage>}

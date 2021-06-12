@@ -45,7 +45,11 @@ export const DeckScene = observer(() => {
                     <h1>Your deck</h1>
                     <CardsContainer>
                         {deck.cardIds.map((cardId) => (
-                            <CardPaper key={cardId} cardId={cardId} />
+                            <CardPaper
+                                key={cardId}
+                                cardId={cardId}
+                                style={{ margin: 5 }}
+                            />
                         ))}
                     </CardsContainer>
                 </>

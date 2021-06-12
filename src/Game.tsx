@@ -8,16 +8,19 @@ import { MainScene } from "components/MainScene";
 import { State } from "./state";
 import { Scene } from "types/game";
 import { DeckScene } from "components/DeckScene";
+import { BattleScene } from "components/BattleScene";
 
 const Wrapper = styled(Container)({
     flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
 });
 
 export const Game = observer(() => {
     const sceneMap: Record<Scene, ComponentType> = {
         Main: MainScene,
         Deck: DeckScene,
-        Battle: () => null,
+        Battle: BattleScene,
         Results: () => null,
     };
     const Scene = sceneMap[State.scene];
