@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { styled, Box, Button, PropTypes } from "@material-ui/core";
 
-import State from "state";
+import { State } from "state";
 import { Scene } from "types/game";
 
 type MainMenuOption = {

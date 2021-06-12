@@ -1,3 +1,3 @@
 import { Game } from "./Game";
 
-export default new Game();
+export const State = new Game();

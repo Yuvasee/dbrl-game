@@ -8,8 +8,8 @@ export type DeckSummary = Partial<Record<CardDefinitionId, number>>;
 export class Deck {
     cardIds: CardDefinitionId[] = [];
 
-    constructor(deckSummary: DeckSummary) {
-        this.createFromSummary(deckSummary);
+    constructor(cardIds: CardDefinitionId[]) {
+        this.cardIds = cardIds;
 
         makeAutoObservable(this);
     }
@@ -18,14 +18,16 @@ export class Deck {
         this.cardIds = knuthShuffle(this.cardIds);
     };
 
-    private createFromSummary = (deckSummary: DeckSummary) =>
-        Object.entries(deckSummary).reduce(
-            (result, [cardId, amount]) =>
-                result.concat(
-                    Array.from({ length: amount }).map(
-                        () => cardId
-                    ) as CardDefinitionId[]
-                ),
-            [] as CardDefinitionId[]
+    static createFromSummary = (deckSummary: DeckSummary) =>
+        new Deck(
+            Object.entries(deckSummary).reduce(
+                (result, [cardId, amount]) =>
+                    result.concat(
+                        Array.from({ length: amount }).map(
+                            () => cardId
+                        ) as CardDefinitionId[]
+                    ),
+                [] as CardDefinitionId[]
+            )
         );
 }
