@@ -23,7 +23,7 @@ export const Game = observer(() => {
         Battle: BattleScene,
         Results: () => null,
     };
-    const Scene = sceneMap[State.scene];
+    const Scene = sceneMap[State.activeScene];
 
     return (
         <Wrapper disableGutters>

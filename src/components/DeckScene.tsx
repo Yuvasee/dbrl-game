@@ -2,9 +2,7 @@ import { styled, Box, Button } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 
 import { UserPanel } from "./UserPanel";
-import { useEffect } from "react";
 import { State } from "state";
-import { Battle } from "state/Battle";
 import { CardPaper } from "./CardPaper";
 
 const Wrapper = styled(Box)({
@@ -30,11 +28,7 @@ const BackButton = styled(Button)({
 });
 
 export const DeckScene = observer(() => {
-    useEffect(() => {
-        State.setBattle(Battle.startNew());
-    }, []);
-
-    const deck = State.battle?.deck;
+    const deck = State.fighter?.deck;
 
     return (
         <Wrapper>
@@ -44,7 +38,7 @@ export const DeckScene = observer(() => {
                 <>
                     <h1>Your deck</h1>
                     <CardsContainer>
-                        {deck.cardIds.map((cardId) => (
+                        {deck.deckIds.map((cardId) => (
                             <CardPaper
                                 key={cardId}
                                 cardId={cardId}
@@ -67,7 +61,7 @@ export const DeckScene = observer(() => {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => State.setScene("Battle")}
+                    onClick={() => State.startBattle()}
                 >
                     To Battle!
                 </Button>

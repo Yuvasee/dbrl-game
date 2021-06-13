@@ -8,9 +8,10 @@ import { State } from "state";
 import { CardPaper, CARD_HEIGHT, CARD_WIDTH } from "./CardPaper";
 import "./BattleHand.css";
 
-const Wrapper = styled(Card)({
+const Wrapper = styled(Card)<never, { cardsAmount: number }>({
     height: CARD_HEIGHT,
     width: "80%",
+    maxWidth: ({ cardsAmount }) => cardsAmount * CARD_WIDTH * 0.6,
     bottom: 0,
     left: "50%",
     transform: "translateX(-50%)",
@@ -40,10 +41,10 @@ export const BattleHand = observer(() => {
         return window.addEventListener("resize", () => doMeasure());
     });
 
-    const cards = State.battle!.deck.cardIds;
+    const cards = State.battle!.player.deck.handIds;
 
     return (
-        <Wrapper elevation={0} ref={wrapperRef}>
+        <Wrapper elevation={0} ref={wrapperRef} cardsAmount={cards.length}>
             <PositionContainer>
                 {cards.map((cardId, i) => (
                     <CardContainer

@@ -85,7 +85,7 @@ const Text = styled(Box)({
 });
 
 export const CardPaper: FC<CardPaperProps> = observer(({ cardId, style }) => {
-    const card = State.battle!.deck.getCardById(cardId);
+    const card = State.fighter?.deck.getCardById(cardId);
 
     if (!card) throw new Error(`Card with id ${cardId} not found`);
 

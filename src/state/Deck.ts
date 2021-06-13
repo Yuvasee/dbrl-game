@@ -6,22 +6,46 @@ import { Card } from "./Card";
 /** Card ids and amount of such type */
 export type DeckSummary = Partial<Record<CardDefinitionId, number>>;
 
+const DRAW_HAND_AMOUNT = 6;
+
 export class Deck {
     cards: Partial<Record<string, Card>>;
-
-    cardIds: string[];
+    deckIds: string[];
+    handIds: string[] = [];
+    discardedIds: string[] = [];
+    expendedIds: string[] = [];
 
     constructor(cards: Record<string, Card>, cardIds: string[]) {
         this.cards = cards;
-        this.cardIds = cardIds;
+        this.deckIds = knuthShuffle(cardIds);
 
-        makeAutoObservable(this);
+        makeAutoObservable(this, {}, { autoBind: true });
     }
 
     getCardById = (id: string) => this.cards[id];
 
-    suffle = () => {
-        this.cardIds = knuthShuffle(this.cardIds);
+    discardHand = () => {
+        this.discardedIds = this.discardedIds.concat(this.handIds);
+        this.handIds = [];
+    };
+
+    drawHand = () => {
+        this.discardHand();
+        for (let i = 0; i < DRAW_HAND_AMOUNT; i++) {
+            this.drawCard();
+        }
+    };
+
+    drawCard = () => {
+        if (!this.deckIds.length) {
+            this.refreshDeck();
+        }
+        this.handIds.push(this.deckIds.pop()!);
+    };
+
+    refreshDeck = () => {
+        this.deckIds = knuthShuffle(this.discardedIds);
+        this.discardedIds = [];
     };
 
     static createFromSummary = (deckSummary: DeckSummary) => {

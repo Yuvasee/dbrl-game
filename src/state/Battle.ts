@@ -1,23 +1,20 @@
 import { makeAutoObservable } from "mobx";
 
-import { Deck } from "./Deck";
+import { Fighter } from "./Fighter";
+
+export type BattleRoundPhase = "Player" | "NPC";
 
 export class Battle {
-    deck: Deck;
+    round: number = 1;
+    phase: BattleRoundPhase = "Player";
+    player: Fighter;
+    npc: Fighter;
 
-    constructor(deck: Deck) {
-        this.deck = deck;
+    constructor(player: Fighter, npc: Fighter) {
+        this.player = player;
+        this.npc = npc;
+        this.player.deck.drawHand();
 
         makeAutoObservable(this);
     }
-
-    static startNew = () => {
-        const deck = Deck.createFromSummary({
-            heavy_strike: 5,
-            cautious_hit: 5,
-            block: 5,
-        });
-
-        return new Battle(deck);
-    };
 }

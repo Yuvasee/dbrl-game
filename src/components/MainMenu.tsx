@@ -2,12 +2,11 @@ import { observer } from "mobx-react-lite";
 import { styled, Box, Button, PropTypes } from "@material-ui/core";
 
 import { State } from "state";
-import { Scene } from "types/game";
 
 type MainMenuOption = {
     text: String;
     color: PropTypes.Color;
-    scene: Scene;
+    onClick: () => void;
 };
 
 const Wrapper = styled(Box)({});
@@ -15,9 +14,9 @@ const Wrapper = styled(Box)({});
 export const MainMenu = observer(() => {
     const options: MainMenuOption[] = [
         {
-            text: "Play",
+            text: "New Game",
             color: "primary",
-            scene: "Deck",
+            onClick: () => State.startNewGame(),
         },
     ];
 
@@ -28,7 +27,7 @@ export const MainMenu = observer(() => {
                     key={option.text as any}
                     variant="contained"
                     color={option.color}
-                    onClick={() => State.setScene(option.scene)}
+                    onClick={option.onClick}
                 >
                     {option.text}
                 </Button>

@@ -1,11 +1,5 @@
 import { CardDefinitionId } from "data/cards";
-
-export type VariableValue =
-    | number
-    | {
-          min: number;
-          max: number;
-      };
+import { VariableValue } from "./generic";
 
 export type CardEffect = {};
 
