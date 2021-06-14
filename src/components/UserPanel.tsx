@@ -5,7 +5,7 @@ import { State } from "state";
 import { Box, styled } from "@material-ui/core";
 
 const Wrapper = styled(Box)({
-    position: "absolute",
+    position: "fixed",
     top: "1rem",
     right: "1rem",
     display: "flex",
