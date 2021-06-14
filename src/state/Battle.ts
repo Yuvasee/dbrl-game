@@ -17,4 +17,12 @@ export class Battle {
 
         makeAutoObservable(this);
     }
+
+    endTurn = () => {
+        this.phase = "NPC";
+        // NPC turns
+        this.player.deck.drawHand();
+        this.round++;
+        this.phase = "Player";
+    };
 }

@@ -11,7 +11,8 @@ import "./BattleHand.css";
 const Wrapper = styled(Card)<never, { cardsAmount: number }>({
     height: CARD_HEIGHT,
     width: "80%",
-    maxWidth: ({ cardsAmount }) => cardsAmount * CARD_WIDTH * 0.6,
+    maxWidth: ({ cardsAmount }) =>
+        `min(${cardsAmount * CARD_WIDTH * 0.6}px, 50%)`,
     bottom: 0,
     left: "50%",
     transform: "translateX(-50%)",

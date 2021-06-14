@@ -22,6 +22,22 @@ export class Deck {
         makeAutoObservable(this, {}, { autoBind: true });
     }
 
+    get deckLength() {
+        return this.deckIds.length;
+    }
+
+    get handLength() {
+        return this.handIds.length;
+    }
+
+    get discardedLength() {
+        return this.discardedIds.length;
+    }
+
+    get expendedLength() {
+        return this.expendedIds.length;
+    }
+
     getCardById = (id: string) => this.cards[id];
 
     discardHand = () => {
