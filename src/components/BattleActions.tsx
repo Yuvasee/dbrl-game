@@ -28,7 +28,7 @@ const Inner = styled(Box)({
     padding: "0 20px",
 });
 
-const Hp = styled(Box)({
+const Ap = styled(Box)({
     fontWeight: "bold",
     fontSize: 60,
     margin: "0 0 15px 20px",
@@ -40,7 +40,7 @@ export const BattleActions = observer(() => {
     return (
         <Wrapper elevation={2}>
             <Inner>
-                Actions <Hp>{ap}</Hp>
+                Actions <Ap>{ap}</Ap>
             </Inner>
         </Wrapper>
     );
