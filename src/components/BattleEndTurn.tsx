@@ -4,31 +4,23 @@ import { State } from "state";
 
 import { CARD_HEIGHT } from "./CardPaper";
 
-const ACTIONS_WIDTH = 160;
-const ACTIONS_HEIGHT = 30;
+const END_TURN_WIDTH = 160;
+const END_TURN_HEIGHT = 30;
 
 const Wrapper = styled(Card)({
-    width: ACTIONS_WIDTH,
-    height: ACTIONS_HEIGHT,
+    width: END_TURN_WIDTH,
+    height: END_TURN_HEIGHT,
     position: "absolute",
     bottom: CARD_HEIGHT + 20,
-    right: `calc((25% - ${ACTIONS_WIDTH}px) / 2)`,
+    right: `calc((25% - ${END_TURN_WIDTH}px) / 2)`,
     border: "3px solid #94a0e0",
-    overflow: "visible",
-    cursor: "pointer",
 });
 
-const Inner = styled(Button)({
-    textAlign: "center",
-    fontSize: 18,
+const EndTurnButton = styled(Button)({
+    fontSize: 17,
     color: "#2038bd",
     width: "100%",
     height: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    label: {
-        justifyContent: "center",
-    },
 });
 
 export const BattleEndTurn = observer(() => {
@@ -37,8 +29,8 @@ export const BattleEndTurn = observer(() => {
     };
 
     return (
-        <Wrapper elevation={2} onClick={clickHandler}>
-            <Inner>-= End Turn =-</Inner>
+        <Wrapper elevation={2}>
+            <EndTurnButton onClick={clickHandler}>== End Turn ==</EndTurnButton>
         </Wrapper>
     );
 });
