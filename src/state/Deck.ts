@@ -1,6 +1,7 @@
 import { CardDefinitionId } from "data/cards";
 import { knuthShuffle } from "knuth-shuffle";
 import { makeAutoObservable } from "mobx";
+import { State } from "state";
 import { Card } from "./Card";
 
 /** Card ids and amount of such type */
@@ -39,6 +40,31 @@ export class Deck {
     }
 
     getCardById = (id: string) => this.cards[id];
+
+    playCard = (cardId: string) => {
+        const card = this.getCardById(cardId);
+        if (
+            !card ||
+            !this.handIds.includes(cardId) ||
+            State.player!.ap < card.actionCost
+        )
+            return;
+
+        State.player!.ap -= card.actionCost;
+        State.battle!.npc.takeDamage(card.calcDamage);
+        State.player!.addBlock(card.calcBlock);
+
+        this.discardCard(cardId);
+    };
+
+    discardCard = (cardId: string) => {
+        const index = this.handIds.indexOf(cardId);
+        if (index !== -1) {
+            this.discardedIds = this.discardedIds.concat(
+                this.handIds.splice(index, 1)
+            );
+        }
+    };
 
     discardHand = () => {
         this.discardedIds = this.discardedIds.concat(this.handIds);

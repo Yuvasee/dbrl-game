@@ -12,10 +12,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-div {
-  height: fit-content;
-}
-
 #root {
   height: 100%;
   display: flex;

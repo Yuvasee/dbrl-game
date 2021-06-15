@@ -11,8 +11,9 @@ export class Fighter {
     deckSummary: DeckSummary;
     hp: number;
     ap: number;
-    defence = 0;
+    block = 0;
     deck: Deck;
+    isDead = false;
 
     constructor(definition: FighterDefinition) {
         this.id = uuidv4();
@@ -25,4 +26,42 @@ export class Fighter {
 
         makeAutoObservable(this);
     }
+
+    resetAp = () => {
+        this.ap = this.definition.baseAp;
+    };
+
+    takeDamage = (damage: number) => {
+        let damageLeft = this.absorbDamageWithDefence(damage);
+        if (!damageLeft) return;
+
+        if (this.hp > damageLeft) {
+            this.hp -= damageLeft;
+            return;
+        }
+
+        this.die();
+    };
+
+    addBlock = (block: number) => {
+        this.block += block;
+    };
+
+    absorbDamageWithDefence = (damage: number): number => {
+        if (!this.block) return damage;
+
+        if (this.block >= damage) {
+            this.block -= damage;
+            return 0;
+        }
+
+        const damageLeft = damage - this.block;
+        this.block = 0;
+        return damageLeft;
+    };
+
+    die = () => {
+        this.hp = 0;
+        this.isDead = true;
+    };
 }

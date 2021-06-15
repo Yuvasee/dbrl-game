@@ -28,7 +28,7 @@ const BackButton = styled(Button)({
 });
 
 export const DeckScene = observer(() => {
-    const deck = State.fighter?.deck;
+    const deck = State.player?.deck;
 
     return (
         <Wrapper>

@@ -22,6 +22,7 @@ export class Battle {
         this.phase = "NPC";
         // NPC turns
         this.player.deck.drawHand();
+        this.player.resetAp();
         this.round++;
         this.phase = "Player";
     };

@@ -9,7 +9,7 @@ import { User } from "./User";
 export class Game {
     activeScene: Scene = "Main";
     user?: User;
-    fighter?: Fighter;
+    player?: Fighter;
     battle?: Battle;
 
     constructor() {
@@ -24,8 +24,8 @@ export class Game {
         this.user = user;
     };
 
-    setFighter = (fighter: Fighter) => {
-        this.fighter = fighter;
+    setPlayer = (fighter: Fighter) => {
+        this.player = fighter;
     };
 
     setBattle = (battle: Battle) => {
@@ -33,15 +33,15 @@ export class Game {
     };
 
     startNewGame = () => {
-        this.setFighter(new Fighter(fighters.paw));
+        this.setPlayer(new Fighter(fighters.paw));
         this.setScene("Deck");
     };
 
     startBattle = () => {
-        if (!this.fighter)
+        if (!this.player)
             throw new Error("Can't start battle before player figher is set");
 
-        this.setBattle(new Battle(this.fighter, new Fighter(fighters.claw)));
+        this.setBattle(new Battle(this.player, new Fighter(fighters.claw)));
         this.setScene("Battle");
     };
 }

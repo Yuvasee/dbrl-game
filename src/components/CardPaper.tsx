@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { styled, Card, CardMedia, Box } from "@material-ui/core";
 
 import { State } from "state";
+import { useCallback } from "react";
 
 export const CARD_WIDTH = 140;
 export const CARD_HEIGHT = 200;
@@ -15,6 +16,7 @@ export type CardPaperProps = {
 const Wrapper = styled(Card)({
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
+    cursor: "pointer",
 });
 
 const CardHeader = styled(Box)({
@@ -85,12 +87,17 @@ const Text = styled(Box)({
 });
 
 export const CardPaper: FC<CardPaperProps> = observer(({ cardId, style }) => {
-    const card = State.fighter?.deck.getCardById(cardId);
+    const { deck } = State.player!;
+    const card = deck.getCardById(cardId);
+
+    const handleClick = useCallback(() => {
+        if (State.activeScene === "Battle") deck.playCard(cardId);
+    }, [cardId, deck]);
 
     if (!card) throw new Error(`Card with id ${cardId} not found`);
 
     return (
-        <Wrapper elevation={5} style={style}>
+        <Wrapper elevation={5} style={style} onClick={handleClick}>
             <CardHeader>
                 <ActionCost>{card.definition.actionCost}</ActionCost>
                 {card.damageText && <Damage>{card.damageText}</Damage>}

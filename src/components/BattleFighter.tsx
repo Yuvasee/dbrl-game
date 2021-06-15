@@ -51,7 +51,7 @@ const Health = styled(Box)({
     marginRight: 20,
 });
 
-const Defence = styled(Box)({
+const Block = styled(Box)({
     display: "flex",
     height: 30,
     fontSize: 22,
@@ -67,7 +67,7 @@ export type BattleFighterProps = {
 };
 
 export const BattleFighter: FC<BattleFighterProps> = observer(
-    ({ fighter: { hp, defence, name }, position }) => {
+    ({ fighter: { hp, block, name }, position }) => {
         const clickHandler = () => {
             State.battle!.endTurn();
         };
@@ -91,10 +91,10 @@ export const BattleFighter: FC<BattleFighterProps> = observer(
                             {hp}
                         </Health>
 
-                        <Defence>
+                        <Block>
                             <SecurityIcon style={{ marginRight: 5 }} />
-                            {defence}
-                        </Defence>
+                            {block}
+                        </Block>
                     </MainStats>
                 </Inner>
             </Wrapper>
