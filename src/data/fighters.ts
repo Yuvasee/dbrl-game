@@ -19,7 +19,7 @@ export const fighters: Record<FighterDefinitionId, FighterDefinition> = {
         id: "claw",
         name: "Claw",
         baseHp: 30,
-        baseAp: 2,
+        baseAp: 3,
         deckSummary: {
             heavy_strike: 5,
             cautious_hit: 5,

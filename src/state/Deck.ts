@@ -3,6 +3,7 @@ import { knuthShuffle } from "knuth-shuffle";
 import { makeAutoObservable } from "mobx";
 import { State } from "state";
 import { Card } from "./Card";
+import type { Fighter } from "./Fighter";
 
 /** Card ids and amount of such type */
 export type DeckSummary = Partial<Record<CardDefinitionId, number>>;
@@ -15,8 +16,14 @@ export class Deck {
     handIds: string[] = [];
     discardedIds: string[] = [];
     expendedIds: string[] = [];
+    fighter: Fighter;
 
-    constructor(cards: Record<string, Card>, cardIds: string[]) {
+    constructor(
+        fighter: Fighter,
+        cards: Record<string, Card>,
+        cardIds: string[]
+    ) {
+        this.fighter = fighter;
         this.cards = cards;
         this.deckIds = knuthShuffle(cardIds);
 
@@ -46,13 +53,15 @@ export class Deck {
         if (
             !card ||
             !this.handIds.includes(cardId) ||
-            State.player!.ap < card.actionCost
+            !this.fighter.spendAp(card.actionCost)
         )
             return;
 
-        State.player!.ap -= card.actionCost;
-        State.battle!.npc.takeDamage(card.calcDamage);
-        State.player!.addBlock(card.calcBlock);
+        this.fighter.addBlock(card.calcBlock);
+
+        const battle = State.battle!;
+        const opponent = battle.getOpponentOf(this.fighter);
+        opponent.takeDamage(card.calcDamage);
 
         this.discardCard(cardId);
     };
@@ -90,7 +99,7 @@ export class Deck {
         this.discardedIds = [];
     };
 
-    static createFromSummary = (deckSummary: DeckSummary) => {
+    static createFromSummary = (fighter: Fighter, deckSummary: DeckSummary) => {
         const cardsArray = Object.entries(deckSummary).reduce(
             (result, [cardDefId, amount]) =>
                 result.concat(
@@ -108,6 +117,6 @@ export class Deck {
 
         const cardIds = cardsArray.map((card) => card.id);
 
-        return new Deck(cards, cardIds);
+        return new Deck(fighter, cards, cardIds);
     };
 }

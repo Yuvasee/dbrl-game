@@ -18,9 +18,15 @@ export class Battle {
         makeAutoObservable(this);
     }
 
+    getOpponentOf = (fighter: Fighter) =>
+        fighter === this.player ? this.npc : this.player;
+
     endTurn = () => {
         this.phase = "NPC";
-        // NPC turns
+        this.npc.deck.drawHand();
+        this.npc.resetAp();
+        this.npc.makeTurn();
+
         this.player.deck.drawHand();
         this.player.resetAp();
         this.round++;

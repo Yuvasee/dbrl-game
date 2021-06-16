@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Deck, DeckSummary } from "./Deck";
 import { FighterDefinition } from "types/fighter";
+import { State } from "state";
 
 export class Fighter {
     id: string;
@@ -22,7 +23,7 @@ export class Fighter {
         this.deckSummary = definition.deckSummary;
         this.hp = definition.baseHp;
         this.ap = definition.baseAp;
-        this.deck = Deck.createFromSummary(definition.deckSummary);
+        this.deck = Deck.createFromSummary(this, definition.deckSummary);
 
         makeAutoObservable(this);
     }
@@ -60,8 +61,25 @@ export class Fighter {
         return damageLeft;
     };
 
+    spendAp = (amount: number) => {
+        if (this.ap >= amount) {
+            this.ap -= amount;
+            return true;
+        }
+        return false;
+    };
+
     die = () => {
         this.hp = 0;
         this.isDead = true;
+    };
+
+    makeTurn = () => {
+        if (State.battle?.phase !== "NPC") return;
+
+        const { handIds } = this.deck;
+        while (this.ap && handIds.length) {
+            this.deck.playCard(handIds[0]);
+        }
     };
 }
