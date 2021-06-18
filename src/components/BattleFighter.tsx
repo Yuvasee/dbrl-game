@@ -19,8 +19,7 @@ const Wrapper = styled(Card)({
     position: "absolute",
     top: ({ top }: WrapperProps) => top,
     left: ({ left }: WrapperProps) => left,
-    border: "3px solid gray",
-    borderRadius: "44%",
+    borderRadius: "50%",
     display: "flex",
     overflow: "visible",
 });
@@ -38,7 +37,7 @@ const Name = styled(Box)({
     position: "absolute",
     left: "50%",
     transform: "translateX(-50%)",
-    bottom: 5,
+    bottom: -40,
 });
 
 const MainStats = styled(Box)({
@@ -53,18 +52,32 @@ const MainStats = styled(Box)({
 export type BattleFighterProps = {
     fighter: Fighter;
     position: "Player" | "NPC";
+    picture: string;
 };
 
 export const BattleFighter: FC<BattleFighterProps> = observer(
-    ({ fighter: { hp, block, name }, position }) => {
+    ({ fighter: { hp, block, name }, position, picture }) => {
         const clickHandler = () => {
             State.battle!.endTurn();
         };
 
-        const left = position === "Player" ? "5%" : `calc(95% - ${FIGHTER_WIDTH}px)`;
+        const isPlayer = position === "Player";
+        const left = isPlayer ? "5%" : `calc(95% - ${FIGHTER_WIDTH}px)`;
 
         return (
-            <Wrapper elevation={5} onClick={clickHandler} left={left} top={"100px"}>
+            <Wrapper
+                elevation={5}
+                onClick={clickHandler}
+                left={left}
+                top={"120px"}
+                style={{
+                    background: `url(${picture})`,
+                    backgroundSize: "cover",
+                    boxShadow: `inset 0 0 25px 6px #fff, 0 0 8px 0 ${
+                        isPlayer ? BLUE_BLOCK : RED_HEALTH
+                    }`,
+                }}
+            >
                 <Inner>
                     <Name>{name}</Name>
 

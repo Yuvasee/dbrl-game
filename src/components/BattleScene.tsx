@@ -10,6 +10,9 @@ import { BattleFighter } from "./BattleFighter";
 import { BattleHand } from "./BattleHand";
 import { UserPanel } from "./UserPanel";
 
+import Claw from "assets/claw.jpg";
+import Paw from "assets/paw.jpg";
+
 const Wrapper = styled(Box)({
     flexGrow: 1,
     position: "relative",
@@ -28,8 +31,8 @@ export const BattleScene = observer(() => {
             <BattleActions />
             <BattleEndTurn />
 
-            <BattleFighter fighter={player} position="Player" />
-            <BattleFighter fighter={npc} position="NPC" />
+            <BattleFighter fighter={player} position="Player" picture={Paw} />
+            <BattleFighter fighter={npc} position="NPC" picture={Claw} />
         </Wrapper>
     );
 });
