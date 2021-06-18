@@ -1,6 +1,14 @@
 @keyframes slideup {
     0% {
+        top: 0px;
+        transform: scale(20%);
+    }
+    20% {
         top: -30px;
+        transform: scale(110%);
+    }
+    28% {
+        transform: scale(100%);
         opacity: 1;
     }
     100% {

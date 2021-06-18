@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { usePrevious } from "utils";
 
 import "./ValueWidget.css";
+import { GREEN_POSITIVE, RED_HEALTH } from "theme/colors";
 
 type WrapperProps = { color: string };
 const Wrapper = styled(Box)({
@@ -13,22 +14,18 @@ const Wrapper = styled(Box)({
     fontSize: 22,
     fontWeight: "bold",
     alignItems: "center",
-    justifyContent: "center",
     color: ({ color }: WrapperProps) => `${color}`,
-    marginRight: 20,
     position: "relative",
     overflow: "visible",
 });
 
-const DiffBox = styled(Box)({
-    top: -30,
-    overflow: "visible",
-});
+const ANIMATION_SECONDS = 4;
 
 const Diff = styled(Box)({
     position: "absolute",
-    top: -30,
-    animation: "slideup 4s",
+    left: 30,
+    animation: `slideup ${ANIMATION_SECONDS}s`,
+    fontSize: 18,
 });
 
 export type ValueWidgetProps = BoxProps & {
@@ -37,34 +34,35 @@ export type ValueWidgetProps = BoxProps & {
     color: string;
 };
 
-export const ValueWidget: FC<ValueWidgetProps> = observer(
-    ({ value, Icon, color, ...props }) => {
-        const diffArray = useLocalObservable(
-            () => [] as { id: string; diff: number }[]
-        );
+export const ValueWidget: FC<ValueWidgetProps> = observer(({ value, Icon, color, ...props }) => {
+    const diffArray = useLocalObservable(() => [] as { id: string; diff: number }[]);
 
-        const previous = usePrevious(value);
+    const previous = usePrevious(value);
 
-        useEffect(() => {
-            if (value !== previous) {
-                diffArray.push({
-                    id: uuidv4(),
-                    diff: value - previous,
-                });
-                setTimeout(() => diffArray.shift(), 4000);
-            }
-        }, [diffArray, previous, value]);
+    useEffect(() => {
+        if (value !== previous) {
+            diffArray.push({
+                id: uuidv4(),
+                diff: value - previous,
+            });
+            setTimeout(() => diffArray.shift(), ANIMATION_SECONDS * 1000 - 500);
+        }
+    }, [diffArray, previous, value]);
 
-        return (
-            <Wrapper color={color} {...props}>
-                <DiffBox>
-                    {diffArray.map(({ id, diff }) => (
-                        <Diff key={id}>{`${diff > 0 ? "+" : ""}${diff}`}</Diff>
-                    ))}
-                </DiffBox>
-                <Icon style={{ marginRight: 5 }} />
-                {value}
-            </Wrapper>
-        );
-    }
-);
+    return (
+        <Wrapper color={color} {...props}>
+            {diffArray.map(({ id, diff }) => {
+                const isPositive = diff > 0;
+                const content = `${isPositive ? "+" : ""}${diff}`;
+                const color = isPositive ? GREEN_POSITIVE : RED_HEALTH;
+                return (
+                    <Diff key={id} style={{ color }}>
+                        {content}
+                    </Diff>
+                );
+            })}
+            <Icon style={{ marginRight: 5 }} />
+            {value}
+        </Wrapper>
+    );
+});
