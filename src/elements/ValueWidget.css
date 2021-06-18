@@ -1,0 +1,10 @@
+@keyframes slideup {
+    0% {
+        top: -30px;
+        opacity: 1;
+    }
+    100% {
+        top: -100px;
+        opacity: 0;
+    }
+}

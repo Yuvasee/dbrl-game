@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import { FC } from "react";
 import { State } from "state";
 import { Fighter } from "state/Fighter";
+import { ValueWidget } from "elements/ValueWidget";
 
 const FIGHTER_WIDTH = 260;
 const FIGHTER_HEIGHT = 260;
@@ -40,27 +41,6 @@ const MainStats = styled(Box)({
     justifyContent: "center",
 });
 
-const Health = styled(Box)({
-    display: "flex",
-    height: 30,
-    fontSize: 22,
-    fontWeight: "bold",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "red",
-    marginRight: 20,
-});
-
-const Block = styled(Box)({
-    display: "flex",
-    height: 30,
-    fontSize: 22,
-    fontWeight: "bold",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#2038bd",
-});
-
 export type BattleFighterProps = {
     fighter: Fighter;
     position: "Player" | "NPC";
@@ -86,15 +66,17 @@ export const BattleFighter: FC<BattleFighterProps> = observer(
                     <Name>{name}</Name>
 
                     <MainStats>
-                        <Health>
-                            <FavoriteIcon style={{ marginRight: 5 }} />
-                            {hp}
-                        </Health>
-
-                        <Block>
-                            <SecurityIcon style={{ marginRight: 5 }} />
-                            {block}
-                        </Block>
+                        <ValueWidget
+                            value={hp}
+                            Icon={FavoriteIcon}
+                            color="red"
+                            style={{ marginRight: 20 }}
+                        />
+                        <ValueWidget
+                            value={block}
+                            Icon={SecurityIcon}
+                            color="#2038bd"
+                        />
                     </MainStats>
                 </Inner>
             </Wrapper>
