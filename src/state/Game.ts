@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 
 import { Scene } from "../types/game";
 import { Battle } from "./Battle";
+import { EventBus } from "./EventBus";
 import { Fighter } from "./Fighter";
 import { User } from "./User";
 
@@ -11,8 +12,10 @@ export class Game {
     user?: User;
     player?: Fighter;
     battle?: Battle;
+    eventBus: EventBus;
 
     constructor() {
+        this.eventBus = new EventBus(this);
         makeAutoObservable(this, {}, { autoBind: true });
     }
 
@@ -38,8 +41,7 @@ export class Game {
     };
 
     startBattle = () => {
-        if (!this.player)
-            throw new Error("Can't start battle before player figher is set");
+        if (!this.player) throw new Error("Can't start battle before player figher is set");
 
         this.setBattle(new Battle(this.player, new Fighter(fighters.claw)));
         this.setScene("Battle");

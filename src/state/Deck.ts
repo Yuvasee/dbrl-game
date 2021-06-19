@@ -1,7 +1,8 @@
-import { CardDefinitionId } from "data/cards";
 import { knuthShuffle } from "knuth-shuffle";
 import { makeAutoObservable } from "mobx";
+
 import { State } from "state";
+import { CardDefinitionId } from "data/cards";
 import { Card } from "./Card";
 import type { Fighter } from "./Fighter";
 
@@ -18,11 +19,7 @@ export class Deck {
     expendedIds: string[] = [];
     fighter: Fighter;
 
-    constructor(
-        fighter: Fighter,
-        cards: Record<string, Card>,
-        cardIds: string[]
-    ) {
+    constructor(fighter: Fighter, cards: Record<string, Card>, cardIds: string[]) {
         this.fighter = fighter;
         this.cards = cards;
         this.deckIds = knuthShuffle(cardIds);
@@ -50,11 +47,7 @@ export class Deck {
 
     playCard = (cardId: string) => {
         const card = this.getCardById(cardId);
-        if (
-            !card ||
-            !this.handIds.includes(cardId) ||
-            !this.fighter.spendAp(card.actionCost)
-        )
+        if (!card || !this.handIds.includes(cardId) || !this.fighter.spendAp(card.actionCost))
             return;
 
         this.fighter.addBlock(card.calcBlock);
@@ -69,9 +62,7 @@ export class Deck {
     discardCard = (cardId: string) => {
         const index = this.handIds.indexOf(cardId);
         if (index !== -1) {
-            this.discardedIds = this.discardedIds.concat(
-                this.handIds.splice(index, 1)
-            );
+            this.discardedIds = this.discardedIds.concat(this.handIds.splice(index, 1));
         }
     };
 
@@ -91,7 +82,11 @@ export class Deck {
         if (!this.deckIds.length) {
             this.refreshDeck();
         }
-        this.handIds.push(this.deckIds.pop()!);
+        const cardId = this.deckIds.pop()!;
+        this.handIds.push(cardId);
+
+        const card = this.getCardById(cardId)!;
+        window.Game.eventBus.emit({ type: "CARD_DRAW", payload: card });
     };
 
     refreshDeck = () => {
