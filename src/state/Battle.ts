@@ -24,6 +24,8 @@ export class Battle {
 
     getOpponentOf = (fighter: Fighter) => (fighter === this.player ? this.npc : this.player);
 
+    getActivePlayer = () => (this.phase === "Player" ? this.player : this.npc);
+
     endTurn = () => {
         this.phase = "NPC";
         this.npc.deck.drawHand();

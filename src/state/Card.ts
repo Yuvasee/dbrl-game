@@ -23,8 +23,7 @@ export class Card {
         makeAutoObservable(this);
     }
 
-    static getDefinitionById = (id: CardDefinitionId): CardDefinition =>
-        cards[id];
+    static getDefinitionById = (id: CardDefinitionId): CardDefinition => cards[id];
 
     get calcDamage(): number {
         return calcVariableValue(this.damage);
@@ -39,9 +38,7 @@ export class Card {
 
         if (!damage) return "";
 
-        return typeof damage === "number"
-            ? damage + ""
-            : `${damage.min}-${damage.max}`;
+        return typeof damage === "number" ? damage + "" : `${damage.min}-${damage.max}`;
     }
 
     get blockText() {
@@ -49,8 +46,6 @@ export class Card {
 
         if (!block) return "";
 
-        return typeof block === "number"
-            ? block + ""
-            : `${block.min}-${block.max}`;
+        return typeof block === "number" ? block + "" : `${block.min}-${block.max}`;
     }
 }

@@ -1,6 +1,6 @@
 import { CardDefinition } from "types/card";
 
-export type CardDefinitionId = "heavy_strike" | "cautious_hit" | "block";
+export type CardDefinitionId = "heavy_strike" | "cautious_hit" | "block" | "minorHeal";
 
 export const cards: Record<CardDefinitionId, CardDefinition> = {
     heavy_strike: {
@@ -16,7 +16,6 @@ export const cards: Record<CardDefinitionId, CardDefinition> = {
             max: 5,
         },
         block: 0,
-        effects: [],
     },
     cautious_hit: {
         id: "cautious_hit",
@@ -28,9 +27,6 @@ export const cards: Record<CardDefinitionId, CardDefinition> = {
         actionCost: 1,
         damage: 2,
         block: 2,
-        effects: [
-            // Block
-        ],
     },
     block: {
         id: "block",
@@ -45,8 +41,20 @@ export const cards: Record<CardDefinitionId, CardDefinition> = {
             min: 3,
             max: 5,
         },
-        effects: [
-            // Block +
-        ],
+    },
+    minorHeal: {
+        id: "minorHeal",
+        name: "Minor Heal",
+        text: "Soothing balm on your wounds",
+        imageUrl:
+            "https://i.picsum.photos/id/237/140/80.jpg?hmac=DlHE3tDGXrt9CwHSSf9XkYkqq4N5P5FBK8UnYIhzSgc",
+        rarity: "Common",
+        actionCost: 1,
+        damage: 0,
+        block: 0,
+        effects: {
+            replenish: true,
+            heal: 5,
+        },
     },
 };

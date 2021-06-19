@@ -12,9 +12,14 @@ export type GameEvent = {
 
 export type GameEventHandler = (payload: GameEventPayload, game: Game) => void;
 
+export type EventBusSubscriber = (
+    eventType: GameEventType,
+    handler: GameEventHandler
+) => () => void;
+
 export class EventBus {
     game: Game;
-    subject: Subject<GameEvent>;
+    private subject: Subject<GameEvent>;
 
     constructor(game: Game) {
         this.game = game;
@@ -25,7 +30,7 @@ export class EventBus {
         this.subject.next(event);
     };
 
-    on = (eventType: GameEventType, handler: GameEventHandler) => {
+    on: EventBusSubscriber = (eventType: GameEventType, handler: GameEventHandler) => {
         const subscription = this.subject
             .pipe(filter((event) => event.type === eventType))
             .subscribe({ next: (event) => handler(event.payload, this.game) });

@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 
 import { Scene } from "../types/game";
 import { Battle } from "./Battle";
+import { EffectController } from "./EffectController";
 import { EventBus } from "./EventBus";
 import { Fighter } from "./Fighter";
 import { User } from "./User";
@@ -13,9 +14,11 @@ export class Game {
     player?: Fighter;
     battle?: Battle;
     eventBus: EventBus;
+    effectController: EffectController;
 
     constructor() {
         this.eventBus = new EventBus(this);
+        this.effectController = new EffectController(this.eventBus.on);
         makeAutoObservable(this, {}, { autoBind: true });
     }
 
