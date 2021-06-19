@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Deck, DeckSummary } from "./Deck";
 import { FighterDefinition } from "types/fighter";
 import { State } from "state";
+import { Battle } from "./Battle";
 
 export class Fighter {
     id: string;
@@ -15,6 +16,7 @@ export class Fighter {
     block = 0;
     deck: Deck;
     isDead = false;
+    battle?: Battle;
 
     constructor(definition: FighterDefinition) {
         this.id = uuidv4();
@@ -27,6 +29,10 @@ export class Fighter {
 
         makeAutoObservable(this);
     }
+
+    setBattle = (battle: Battle) => {
+        this.battle = battle;
+    };
 
     resetAp = () => {
         this.ap = this.definition.baseAp;

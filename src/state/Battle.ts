@@ -12,14 +12,17 @@ export class Battle {
 
     constructor(player: Fighter, npc: Fighter) {
         this.player = player;
+        player.battle = this;
+
         this.npc = npc;
+        npc.battle = this;
+
         this.player.deck.drawHand();
 
         makeAutoObservable(this);
     }
 
-    getOpponentOf = (fighter: Fighter) =>
-        fighter === this.player ? this.npc : this.player;
+    getOpponentOf = (fighter: Fighter) => (fighter === this.player ? this.npc : this.player);
 
     endTurn = () => {
         this.phase = "NPC";
