@@ -5,6 +5,7 @@ import { CardDefinitionId, cards } from "data/cards";
 import { CardDefinition } from "types/card";
 import { VariableValue } from "types/generic";
 import { calcVariableValue } from "utils";
+import { Deck } from "./Deck";
 
 export class Card {
     id: string;
@@ -12,18 +13,17 @@ export class Card {
     actionCost: number;
     damage: VariableValue;
     block: VariableValue;
+    deck?: Deck;
 
     constructor(definitionId: CardDefinitionId) {
-        this.id = uuidv4();
         this.definition = Card.getDefinitionById(definitionId);
+        this.id = this.definition.name + uuidv4();
         this.actionCost = this.definition.actionCost;
         this.damage = this.definition.damage;
         this.block = this.definition.block;
 
         makeAutoObservable(this);
     }
-
-    static getDefinitionById = (id: CardDefinitionId): CardDefinition => cards[id];
 
     get calcDamage(): number {
         return calcVariableValue(this.damage);
@@ -48,4 +48,10 @@ export class Card {
 
         return typeof block === "number" ? block + "" : `${block.min}-${block.max}`;
     }
+
+    setDeck = (deck: Deck) => {
+        this.deck = deck;
+    };
+
+    static getDefinitionById = (id: CardDefinitionId): CardDefinition => cards[id];
 }

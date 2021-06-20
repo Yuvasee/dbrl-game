@@ -22,6 +22,7 @@ export class Deck {
     constructor(fighter: Fighter, cards: Record<string, Card>, cardIds: string[]) {
         this.fighter = fighter;
         this.cards = cards;
+        Object.values(cards).forEach((card) => card.setDeck(this));
         this.deckIds = knuthShuffle(cardIds);
 
         makeAutoObservable(this, {}, { autoBind: true });
