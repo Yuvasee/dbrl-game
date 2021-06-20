@@ -1,9 +1,8 @@
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
 
-import { CardDefinitionId, cards } from "data/cards";
-import { CardDefinition } from "types/card";
-import { VariableValue } from "types/generic";
+import { CardDefinition, CardDefinitionId, VariableValue } from "types";
+import { cardDefinitions } from "data/cards";
 import { calcVariableValue } from "utils";
 import { Deck } from "./Deck";
 
@@ -53,5 +52,5 @@ export class Card {
         this.deck = deck;
     };
 
-    static getDefinitionById = (id: CardDefinitionId): CardDefinition => cards[id];
+    static getDefinitionById = (id: CardDefinitionId): CardDefinition => cardDefinitions[id];
 }

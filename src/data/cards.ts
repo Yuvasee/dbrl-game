@@ -1,8 +1,6 @@
-import { CardDefinition } from "types/card";
+import { CardDefinition, CardDefinitionId } from "types/card";
 
-export type CardDefinitionId = "heavy_strike" | "cautious_hit" | "block" | "minorHeal";
-
-export const cards: Record<CardDefinitionId, CardDefinition> = {
+export const cardDefinitions: Record<CardDefinitionId, CardDefinition> = {
     heavy_strike: {
         id: "heavy_strike",
         name: "Heavy strike",

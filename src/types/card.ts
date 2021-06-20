@@ -1,14 +1,15 @@
-import { CardDefinitionId } from "data/cards";
 import { VariableValue } from "./generic";
 
-export type CardEffectName = keyof CardEffects;
+export type CardDefinitionId = "heavy_strike" | "cautious_hit" | "block" | "minorHeal";
 
-export type CardEffects = Partial<{
+export type CardRarity = "Basic" | "Common" | "Uncommon" | "Rare" | "Unique";
+
+export type CardDefinitionEffects = Partial<{
     replenish: boolean;
     heal: number;
 }>;
 
-export type CardRarity = "Basic" | "Common" | "Uncommon" | "Rare" | "Unique";
+export type CardEffectName = keyof CardDefinitionEffects;
 
 export type CardDefinition = {
     id: CardDefinitionId;
@@ -19,5 +20,5 @@ export type CardDefinition = {
     actionCost: number;
     damage: VariableValue;
     block: VariableValue;
-    effects?: CardEffects;
+    effects?: CardDefinitionEffects;
 };

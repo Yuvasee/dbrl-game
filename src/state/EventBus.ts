@@ -1,21 +1,9 @@
 import { Subject } from "rxjs";
 import { filter } from "rxjs/operators";
+
+import { GameEvent, EventBusSubscriber, GameEventType, GameEventHandler } from "types";
+import { logEvent } from "utils";
 import { Game } from "./Game";
-
-export type GameEventType = "CARD_DRAW" | "CARD_PLAY" | "CARD_DISCARD";
-export type GameEventPayload = any;
-
-export type GameEvent = {
-    type: GameEventType;
-    payload: GameEventPayload;
-};
-
-export type GameEventHandler = (payload: GameEventPayload, game: Game) => void;
-
-export type EventBusSubscriber = (
-    eventType: GameEventType,
-    handler: GameEventHandler
-) => () => void;
 
 export class EventBus {
     game: Game;
@@ -27,6 +15,7 @@ export class EventBus {
     }
 
     emit = (event: GameEvent) => {
+        logEvent(event);
         this.subject.next(event);
     };
 

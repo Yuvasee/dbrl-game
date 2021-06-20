@@ -1,7 +1,9 @@
-import { DeckSummary } from "state/Deck";
+import { DeckSummary } from "./deck";
+
+export type FighterDefinitionId = "paw" | "claw";
 
 export type FighterDefinition = {
-    id: string;
+    id: FighterDefinitionId;
     name: string;
     baseHp: number;
     baseAp: number;

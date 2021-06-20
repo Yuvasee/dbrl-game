@@ -1,8 +1,8 @@
 import { makeAutoObservable } from "mobx";
 import { v4 as uuidv4 } from "uuid";
 
-import { Deck, DeckSummary } from "./Deck";
-import { FighterDefinition } from "types/fighter";
+import { Deck } from "./Deck";
+import { FighterDefinition, DeckSummary } from "types";
 import { State } from "state";
 import { Battle } from "./Battle";
 

@@ -1,7 +1,7 @@
 import { fighters } from "data/fighters";
 import { makeAutoObservable } from "mobx";
 
-import { Scene } from "../types/game";
+import { Scene } from "types";
 import { Battle } from "./Battle";
 import { EffectController } from "./EffectController";
 import { EventBus } from "./EventBus";

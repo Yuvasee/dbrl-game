@@ -1,8 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
+import { BattleRoundPhase } from "types";
 import { Fighter } from "./Fighter";
-
-export type BattleRoundPhase = "Player" | "NPC";
 
 export class Battle {
     round: number = 1;

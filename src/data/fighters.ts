@@ -1,6 +1,4 @@
-import { FighterDefinition } from "types/fighter";
-
-export type FighterDefinitionId = "paw" | "claw";
+import { FighterDefinition, FighterDefinitionId } from "types/fighter";
 
 export const fighters: Record<FighterDefinitionId, FighterDefinition> = {
     paw: {
@@ -12,6 +10,7 @@ export const fighters: Record<FighterDefinitionId, FighterDefinition> = {
             heavy_strike: 5,
             cautious_hit: 5,
             block: 5,
+            minorHeal: 5,
         },
         imageUrl: "",
     },

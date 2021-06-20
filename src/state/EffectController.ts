@@ -1,12 +1,6 @@
-import { CardEffectName } from "types/card";
-import { EventBusSubscriber, GameEventHandler, GameEventType } from "./EventBus";
+import { CardEffectName, CardEffectHook, EventBusSubscriber } from "types";
 import { Card } from "./Card";
 import { Game } from "./Game";
-
-export type CardEffectHook = {
-    listen: GameEventType;
-    handle: GameEventHandler;
-};
 
 export class EffectController {
     private effects: Record<CardEffectName, CardEffectHook[]> = {

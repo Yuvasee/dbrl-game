@@ -1,6 +1,8 @@
 import rand from "math-random";
 import { useRef, useEffect } from "react";
 
+import { GameEvent } from "types";
+
 import { VariableValue } from "types/generic";
 
 export const getRandomMinMax = (min: number, max: number) =>
@@ -15,4 +17,8 @@ export const usePrevious = <T>(value: T): T => {
         ref.current = value;
     }, [value]);
     return ref.current;
+};
+
+export const logEvent = (event: GameEvent) => {
+    console.log('Event "%s" emitted: %o', event.type, event.payload);
 };

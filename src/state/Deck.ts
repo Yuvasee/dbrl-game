@@ -2,12 +2,9 @@ import { knuthShuffle } from "knuth-shuffle";
 import { makeAutoObservable } from "mobx";
 
 import { State } from "state";
-import { CardDefinitionId } from "data/cards";
+import { CardDefinitionId, DeckSummary } from "types";
 import { Card } from "./Card";
 import type { Fighter } from "./Fighter";
-
-/** Card ids and amount of such type */
-export type DeckSummary = Partial<Record<CardDefinitionId, number>>;
 
 const DRAW_HAND_AMOUNT = 6;
 

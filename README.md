@@ -36,3 +36,24 @@ Piercing
 
 Counter:
 - Deal 1 damage back to the enemy when hit. Remove all Counter at the beginning of your turn.
+
+Draft:
+```ts
+export type CardEffects = Partial<{
+    replenish: boolean;
+    improviseCard: boolean;
+    ifImrovised: CardEffectHookMap;
+    expend: boolean;
+    ambush: boolean;
+    impair: number;
+    wound: number;
+    power: number;
+    bleed: number;
+    piercing: boolean;
+    counter: number;
+    combo: number;
+    ifHasCombo: CardEffectHookMap;
+    finisher: CardEffectHookMap;
+    discardCards: number;
+}>;
+```
