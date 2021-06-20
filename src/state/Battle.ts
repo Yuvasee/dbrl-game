@@ -31,9 +31,9 @@ export class Battle {
         this.npc.resetAp();
         this.npc.makeTurn();
 
+        this.phase = "Player";
         this.player.deck.drawHand();
         this.player.resetAp();
         this.round++;
-        this.phase = "Player";
     };
 }

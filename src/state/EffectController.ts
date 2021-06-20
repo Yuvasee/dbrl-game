@@ -7,9 +7,9 @@ export class EffectController {
         replenish: [
             {
                 listen: "CARD_DRAW_AFTER",
-                handle: (card: Card, game: Game) => {
+                handle: (card: Card, _game: Game) => {
                     if (!card.definition.effects?.replenish) return;
-                    game.battle?.getActivePlayer().deck.drawCard();
+                    card.deck?.drawCard();
                 },
             },
         ],
