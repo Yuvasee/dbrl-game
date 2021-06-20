@@ -6,7 +6,7 @@ export class EffectController {
     private effects: Record<CardEffectName, CardEffectHook[]> = {
         replenish: [
             {
-                listen: "CARD_DRAW",
+                listen: "CARD_DRAW_AFTER",
                 handle: (card: Card, game: Game) => {
                     if (!card.definition.effects?.replenish) return;
                     game.battle?.getActivePlayer().deck.drawCard();

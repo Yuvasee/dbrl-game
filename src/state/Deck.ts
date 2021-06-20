@@ -77,6 +77,7 @@ export class Deck {
     };
 
     drawCard = () => {
+        window.Game.eventBus.emit({ type: "CARD_DRAW_BEFORE", payload: this });
         if (!this.deckIds.length) {
             this.refreshDeck();
         }
@@ -84,7 +85,7 @@ export class Deck {
         this.handIds.push(cardId);
 
         const card = this.getCardById(cardId)!;
-        window.Game.eventBus.emit({ type: "CARD_DRAW", payload: card });
+        window.Game.eventBus.emit({ type: "CARD_DRAW_AFTER", payload: card });
     };
 
     refreshDeck = () => {
