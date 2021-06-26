@@ -1,13 +1,26 @@
+### Roguelike Deck Builder engine
 
+Based on TypeScript, React, MobX stack.
+
+Inspired by [Griftlands](https://www.klei.com/games/griftlands) (highly recommened to play).
+
+#### Game effects
+
+Implemented:
+
+Replenish
+- When drawn, this card draws another card immediately.
+
+Heal
+- Heals N.
+
+To implement:
 
 Combo
 - Card that gives combo
 - Card that makes additional effect when player has combo
 - Card that consumes all combo making some effect per each point (finisher)
 - halved on taking damage
-
-Replenish
-- When drawn, this card draws another card immediately.
 
 Improvise
 - Generates three random cards for the player to choose 1 of to add to their hand.
@@ -36,24 +49,3 @@ Piercing
 
 Counter:
 - Deal 1 damage back to the enemy when hit. Remove all Counter at the beginning of your turn.
-
-Draft:
-```ts
-export type CardEffects = Partial<{
-    replenish: boolean;
-    improviseCard: boolean;
-    ifImrovised: CardEffectHookMap;
-    expend: boolean;
-    ambush: boolean;
-    impair: number;
-    wound: number;
-    power: number;
-    bleed: number;
-    piercing: boolean;
-    counter: number;
-    combo: number;
-    ifHasCombo: CardEffectHookMap;
-    finisher: CardEffectHookMap;
-    discardCards: number;
-}>;
-```
