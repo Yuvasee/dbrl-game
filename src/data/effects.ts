@@ -17,6 +17,15 @@ export const cardEffects: Record<GameEffectName, GameEffect<CardEvent>> = {
     },
     heal: {
         name: "heal",
-        hooks: [],
+        hooks: [
+            {
+                listen: "CARD_PLAY_AFTER",
+                handle: (card: Card, _game: Game) => {
+                    const healAmount = card.definition.effects?.heal;
+                    if (!healAmount || isNaN(healAmount)) return;
+                    card.deck?.fighter.heal(healAmount);
+                },
+            },
+        ],
     },
 };

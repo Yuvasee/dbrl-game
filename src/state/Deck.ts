@@ -48,20 +48,28 @@ export class Deck {
         if (!card || !this.handIds.includes(cardId) || !this.fighter.spendAp(card.actionCost))
             return;
 
+        window.Game.eventBus.emit({ type: "CARD_PLAY_BEFORE", payload: card });
+
         this.fighter.addBlock(card.calcBlock);
 
         const battle = State.battle!;
+
         const opponent = battle.getOpponentOf(this.fighter);
         opponent.takeDamage(card.calcDamage);
 
         this.discardCard(cardId);
+
+        window.Game.eventBus.emit({ type: "CARD_PLAY_AFTER", payload: card });
     };
 
     discardCard = (cardId: string) => {
         const index = this.handIds.indexOf(cardId);
-        if (index !== -1) {
-            this.discardedIds = this.discardedIds.concat(this.handIds.splice(index, 1));
-        }
+        if (index === -1) return;
+
+        const card = this.getCardById(cardId)!;
+        window.Game.eventBus.emit({ type: "CARD_DISCARD_BEFORE", payload: card });
+        this.discardedIds = this.discardedIds.concat(this.handIds.splice(index, 1));
+        window.Game.eventBus.emit({ type: "CARD_DISCARD_AFTER", payload: card });
     };
 
     discardHand = () => {

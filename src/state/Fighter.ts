@@ -38,6 +38,11 @@ export class Fighter {
         this.ap = this.definition.baseAp;
     };
 
+    heal = (amount: number) => {
+        if (this.isDead) return;
+        this.hp += amount;
+    };
+
     takeDamage = (damage: number) => {
         let damageLeft = this.absorbDamageWithDefence(damage);
         if (!damageLeft) return;
