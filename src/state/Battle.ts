@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-import { BattleRoundPhase } from "types";
+import { BattleRoundPhase, Winner } from "types";
 import { Fighter } from "./Fighter";
 
 export class Battle {
@@ -8,6 +8,7 @@ export class Battle {
     phase: BattleRoundPhase = "Player";
     player: Fighter;
     npc: Fighter;
+    winner?: Winner;
 
     constructor(player: Fighter, npc: Fighter) {
         this.player = player;
@@ -35,5 +36,16 @@ export class Battle {
         this.player.deck.drawHand();
         this.player.resetAp();
         this.round++;
+    };
+
+    endBattle = () => {
+        if (!this.npc.hp) {
+            this.winner = "Player";
+            return;
+        }
+
+        if (!this.player.hp) {
+            this.winner = "NPC";
+        }
     };
 }

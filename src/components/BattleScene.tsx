@@ -9,6 +9,7 @@ import { BattleEndTurn } from "./BattleEndTurn";
 import { BattleFighter } from "./BattleFighter";
 import { BattleHand } from "./BattleHand";
 import { UserPanel } from "./UserPanel";
+import { BattleEnded } from "./BattleEnded";
 
 import Claw from "assets/claw.jpg";
 import Paw from "assets/paw.jpg";
@@ -19,7 +20,7 @@ const Wrapper = styled(Box)({
 });
 
 export const BattleScene = observer(() => {
-    const { player, npc } = State.battle!;
+    const { player, npc, winner } = State.battle!;
 
     return (
         <Wrapper>
@@ -33,6 +34,8 @@ export const BattleScene = observer(() => {
 
             <BattleFighter fighter={player} position="Player" picture={Paw} />
             <BattleFighter fighter={npc} position="NPC" picture={Claw} />
+
+            {winner && <BattleEnded winner={winner} />}
         </Wrapper>
     );
 });

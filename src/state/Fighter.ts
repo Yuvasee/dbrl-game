@@ -83,6 +83,7 @@ export class Fighter {
     die = () => {
         this.hp = 0;
         this.isDead = true;
+        this.battle?.endBattle();
     };
 
     makeTurn = () => {
