@@ -19,6 +19,7 @@ const Wrapper = styled(Card)<never, { cardsamount: number }>({
     transform: "translateX(-50%)",
     position: "absolute",
     overflow: "visible",
+    zIndex: 10000,
 });
 
 const PositionContainer = styled(Box)({

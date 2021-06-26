@@ -1,16 +1,14 @@
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import SecurityIcon from "@material-ui/icons/Security";
-
 import { styled, Card, Box } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import { FC } from "react";
+
 import { State } from "state";
 import { Fighter } from "state/Fighter";
-import { ValueWidget } from "elements/ValueWidget";
 import { BLUE_BLOCK, RED_HEALTH } from "theme/colors";
+import { BattleFighterHud } from "./BattleFighterHud";
 
-const FIGHTER_WIDTH = 260;
-const FIGHTER_HEIGHT = 260;
+export const FIGHTER_WIDTH = 260;
+export const FIGHTER_HEIGHT = 260;
 
 type WrapperProps = { left: string; top: string };
 const Wrapper = styled(Card)({
@@ -40,15 +38,6 @@ const Name = styled(Box)({
     bottom: -40,
 });
 
-const MainStats = styled(Box)({
-    position: "absolute",
-    left: "50%",
-    transform: "translateX(-50%)",
-    top: -40,
-    display: "flex",
-    justifyContent: "center",
-});
-
 export type BattleFighterProps = {
     fighter: Fighter;
     position: "Player" | "NPC";
@@ -56,7 +45,7 @@ export type BattleFighterProps = {
 };
 
 export const BattleFighter: FC<BattleFighterProps> = observer(
-    ({ fighter: { hp, block, name }, position, picture }) => {
+    ({ fighter: { baseHp, hp, block, name }, position, picture }) => {
         const clickHandler = () => {
             State.battle!.endTurn();
         };
@@ -80,16 +69,7 @@ export const BattleFighter: FC<BattleFighterProps> = observer(
             >
                 <Inner>
                     <Name>{name}</Name>
-
-                    <MainStats>
-                        <ValueWidget
-                            value={hp}
-                            Icon={FavoriteIcon}
-                            color={RED_HEALTH}
-                            style={{ marginRight: 20 }}
-                        />
-                        <ValueWidget value={block} Icon={SecurityIcon} color={BLUE_BLOCK} />
-                    </MainStats>
+                    <BattleFighterHud baseHp={baseHp} hp={hp} block={block} />
                 </Inner>
             </Wrapper>
         );

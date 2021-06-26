@@ -8,23 +8,22 @@ import "./ValueWidget.css";
 import { GREEN_POSITIVE, RED_HEALTH } from "theme/colors";
 import { runInAction } from "mobx";
 
-type WrapperProps = { color: string };
-const Wrapper = styled(Box)({
-    display: "flex",
-    height: 30,
-    fontSize: 22,
+const Wrapper = styled(Box)<never, { minimal: boolean }>({
+    display: "inline-flex",
+    height: 20,
+    padding: ({ minimal }) => (minimal ? 0 : "0 10px"),
     fontWeight: "bold",
     alignItems: "center",
-    color: ({ color }: WrapperProps) => `${color}`,
+    justifyContent: "flex-end",
     position: "relative",
     overflow: "visible",
 });
 
 const ANIMATION_SECONDS = 4;
 
-const Diff = styled(Box)({
+const Diff = styled(Box)<never, { minimal: boolean }>({
     position: "absolute",
-    left: 30,
+    left: ({ minimal }) => (minimal ? 0 : 24),
     animation: `slideup ${ANIMATION_SECONDS}s`,
     fontSize: 18,
 });
@@ -32,40 +31,45 @@ const Diff = styled(Box)({
 export type ValueWidgetProps = BoxProps & {
     value: number;
     Icon: ElementType;
-    color: string;
+    minimal?: boolean;
 };
 
-export const ValueWidget: FC<ValueWidgetProps> = observer(({ value, Icon, color, ...props }) => {
-    const diffArray = useLocalObservable(() => [] as { id: string; diff: number }[]);
+export const ValueWidget: FC<ValueWidgetProps> = observer(
+    ({ value, Icon, minimal = false, ...props }) => {
+        const diffArray = useLocalObservable(() => [] as { id: string; diff: number }[]);
 
-    const previous = usePrevious(value);
+        const previous = usePrevious(value);
 
-    useEffect(() => {
-        if (value !== previous) {
-            runInAction(() =>
-                diffArray.push({
-                    id: uuidv4(),
-                    diff: value - previous,
-                })
-            );
-            setTimeout(() => runInAction(() => diffArray.shift()), ANIMATION_SECONDS * 1000 - 500);
-        }
-    }, [diffArray, previous, value]);
-
-    return (
-        <Wrapper color={color} {...props}>
-            {diffArray.map(({ id, diff }) => {
-                const isPositive = diff > 0;
-                const content = `${isPositive ? "+" : ""}${diff}`;
-                const color = isPositive ? GREEN_POSITIVE : RED_HEALTH;
-                return (
-                    <Diff key={id} style={{ color }}>
-                        {content}
-                    </Diff>
+        useEffect(() => {
+            if (value !== previous) {
+                runInAction(() =>
+                    diffArray.push({
+                        id: uuidv4(),
+                        diff: value - previous,
+                    })
                 );
-            })}
-            <Icon style={{ marginRight: 5 }} />
-            {value}
-        </Wrapper>
-    );
-});
+                setTimeout(
+                    () => runInAction(() => diffArray.shift()),
+                    ANIMATION_SECONDS * 1000 - 500
+                );
+            }
+        }, [diffArray, previous, value]);
+
+        return (
+            <Wrapper {...props} minimal={minimal}>
+                {diffArray.map(({ id, diff }) => {
+                    const isPositive = diff > 0;
+                    const content = `${isPositive ? "+" : ""}${diff}`;
+                    const color = isPositive ? GREEN_POSITIVE : RED_HEALTH;
+                    return (
+                        <Diff key={id} style={{ color }} minimal={minimal}>
+                            {content}
+                        </Diff>
+                    );
+                })}
+                {!minimal && <Icon style={{ marginRight: 5 }} fontSize="inherit" />}
+                {value}
+            </Wrapper>
+        );
+    }
+);

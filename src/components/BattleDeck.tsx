@@ -14,7 +14,7 @@ const Wrapper = styled(Card)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignContent: "center",
+    alignItems: "center",
 });
 
 const Inner = styled(Box)({
