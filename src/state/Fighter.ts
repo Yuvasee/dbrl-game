@@ -11,6 +11,7 @@ export class Fighter {
     name: string;
     definition: FighterDefinition;
     deckSummary: DeckSummary;
+    baseHp: number;
     hp: number;
     ap: number;
     block = 0;
@@ -23,6 +24,7 @@ export class Fighter {
         this.name = definition.name;
         this.definition = definition;
         this.deckSummary = definition.deckSummary;
+        this.baseHp = definition.baseHp;
         this.hp = definition.baseHp;
         this.ap = definition.baseAp;
         this.deck = Deck.createFromSummary(this, definition.deckSummary);
@@ -40,7 +42,7 @@ export class Fighter {
 
     heal = (amount: number) => {
         if (this.isDead) return;
-        this.hp += amount;
+        this.hp = Math.min(this.hp + amount, this.baseHp);
     };
 
     takeDamage = (damage: number) => {
