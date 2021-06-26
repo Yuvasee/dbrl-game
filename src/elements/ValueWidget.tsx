@@ -9,12 +9,13 @@ import { GREEN_POSITIVE, RED_HEALTH } from "theme/colors";
 import { runInAction } from "mobx";
 
 const Wrapper = styled(Box)<never, { minimal: boolean }>({
+    flexGrow: ({ minimal }) => (minimal ? 1 : 0),
     display: "inline-flex",
     height: 20,
     padding: ({ minimal }) => (minimal ? 0 : "0 10px"),
     fontWeight: "bold",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: ({ minimal }) => (minimal ? "center" : "flex-end"),
     position: "relative",
     overflow: "visible",
 });
@@ -68,7 +69,7 @@ export const ValueWidget: FC<ValueWidgetProps> = observer(
                     );
                 })}
                 {!minimal && <Icon style={{ marginRight: 5 }} fontSize="inherit" />}
-                {value}
+                <span style={{ paddingBottom: 1 }}>{value}</span>
             </Wrapper>
         );
     }

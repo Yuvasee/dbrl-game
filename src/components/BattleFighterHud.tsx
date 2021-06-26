@@ -15,7 +15,6 @@ const Wrapper = styled(Box)({
     transform: "translateX(-50%)",
     top: -40,
     width: "100%",
-    border: `1px solid #999`,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -25,10 +24,22 @@ const Wrapper = styled(Box)({
 const HpScale = styled(Box)({
     flexGrow: 1,
     border: `1px solid ${RED_HEALTH}`,
+    height: 22,
 });
 
 const CurrentHp = styled(Box)({
+    height: 22,
     backgroundColor: RED_HEALTH,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+});
+
+const Block = styled(Box)({
+    width: 50,
+    height: 22,
+    border: `1px solid #999`,
+    borderLeft: 0,
 });
 
 export type BattleFighterHudProps = {
@@ -53,27 +64,24 @@ export const BattleFighterHud: FC<BattleFighterHudProps> = observer(({ baseHp, h
     return (
         <Wrapper>
             <HpScale>
-                <RootRef rootRef={currentHpRef}>
-                    <CurrentHp
-                        style={{
-                            width: `${currentHpPercent}%`,
-                            textAlign: isHpNarrow ? "center" : "right",
-                        }}
-                    >
-                        <ValueWidget
-                            value={hp}
-                            Icon={FavoriteIcon}
-                            minimal={isHpNarrow}
-                            style={{
-                                backgroundColor: RED_HEALTH,
-                                color: WHITE,
-                            }}
-                        />
-                    </CurrentHp>
-                </RootRef>
+                {!!hp && (
+                    <RootRef rootRef={currentHpRef}>
+                        <CurrentHp style={{ width: `${currentHpPercent}%` }}>
+                            <ValueWidget
+                                value={hp}
+                                Icon={FavoriteIcon}
+                                minimal={isHpNarrow}
+                                style={{
+                                    backgroundColor: RED_HEALTH,
+                                    color: WHITE,
+                                }}
+                            />
+                        </CurrentHp>
+                    </RootRef>
+                )}
             </HpScale>
 
-            {!!block && (
+            <Block>
                 <ValueWidget
                     value={block}
                     Icon={SecurityIcon}
@@ -81,7 +89,7 @@ export const BattleFighterHud: FC<BattleFighterHudProps> = observer(({ baseHp, h
                         color: BLUE_BLOCK,
                     }}
                 />
-            )}
+            </Block>
         </Wrapper>
     );
 });
