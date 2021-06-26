@@ -10,10 +10,10 @@ import "./BattleHand.css";
 
 const CARDS_FAN_DEGREE = 20;
 
-const Wrapper = styled(Card)<never, { cardsAmount: number }>({
+const Wrapper = styled(Card)<never, { cardsamount: number }>({
     height: CARD_HEIGHT,
     width: "80%",
-    maxWidth: ({ cardsAmount }) => `min(${cardsAmount * CARD_WIDTH * 0.6}px, 50%)`,
+    maxWidth: ({ cardsamount }) => `min(${cardsamount * CARD_WIDTH * 0.6}px, 50%)`,
     bottom: 20,
     left: "50%",
     transform: "translateX(-50%)",
@@ -45,7 +45,7 @@ export const BattleHand = observer(() => {
     const degToRad = (deg: number) => (Math.PI / 180) * deg;
 
     return (
-        <Wrapper elevation={0} ref={wrapperRef} cardsAmount={cards.length}>
+        <Wrapper elevation={0} ref={wrapperRef} cardsamount={cards.length}>
             <PositionContainer>
                 {cards.map((cardId, i) => {
                     const left = i * ((width - CARD_WIDTH) / (cards.length - 1));

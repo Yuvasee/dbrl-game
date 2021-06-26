@@ -27,7 +27,7 @@ export class Fighter {
         this.ap = definition.baseAp;
         this.deck = Deck.createFromSummary(this, definition.deckSummary);
 
-        makeAutoObservable(this);
+        makeAutoObservable(this, {}, { autoBind: true });
     }
 
     setBattle = (battle: Battle) => {

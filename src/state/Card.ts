@@ -21,7 +21,7 @@ export class Card {
         this.damage = this.definition.damage;
         this.block = this.definition.block;
 
-        makeAutoObservable(this);
+        makeAutoObservable(this, {}, { autoBind: true });
     }
 
     get calcDamage(): number {

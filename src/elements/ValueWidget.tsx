@@ -6,6 +6,7 @@ import { usePrevious } from "utils";
 
 import "./ValueWidget.css";
 import { GREEN_POSITIVE, RED_HEALTH } from "theme/colors";
+import { runInAction } from "mobx";
 
 type WrapperProps = { color: string };
 const Wrapper = styled(Box)({
@@ -41,11 +42,13 @@ export const ValueWidget: FC<ValueWidgetProps> = observer(({ value, Icon, color,
 
     useEffect(() => {
         if (value !== previous) {
-            diffArray.push({
-                id: uuidv4(),
-                diff: value - previous,
-            });
-            setTimeout(() => diffArray.shift(), ANIMATION_SECONDS * 1000 - 500);
+            runInAction(() =>
+                diffArray.push({
+                    id: uuidv4(),
+                    diff: value - previous,
+                })
+            );
+            setTimeout(() => runInAction(() => diffArray.shift()), ANIMATION_SECONDS * 1000 - 500);
         }
     }, [diffArray, previous, value]);
 

@@ -47,18 +47,12 @@ export class Deck {
         const card = this.getCardById(cardId);
         if (!card || !this.handIds.includes(cardId) || !this.fighter.spendAp(card.actionCost))
             return;
-
         window.Game.eventBus.emit({ type: "CARD_PLAY_BEFORE", payload: card });
-
         this.fighter.addBlock(card.calcBlock);
-
         const battle = State.battle!;
-
         const opponent = battle.getOpponentOf(this.fighter);
         opponent.takeDamage(card.calcDamage);
-
         this.discardCard(cardId);
-
         window.Game.eventBus.emit({ type: "CARD_PLAY_AFTER", payload: card });
     };
 
