@@ -18,7 +18,7 @@ export class Game {
 
     constructor() {
         this.eventBus = new EventBus(this);
-        this.effectController = new EffectController(this.eventBus.on);
+        this.effectController = new EffectController(this.eventBus);
         makeAutoObservable(this, {}, { autoBind: true });
     }
 

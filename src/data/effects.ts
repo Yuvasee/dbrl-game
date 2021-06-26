@@ -1,8 +1,8 @@
 import { Card } from "state/Card";
 import { Game } from "state/Game";
-import { CardEffectName, CardEffect } from "types";
+import { GameEffectName, GameEffect, CardEvent } from "types";
 
-export const effects: Record<CardEffectName, CardEffect> = {
+export const cardEffects: Record<GameEffectName, GameEffect<CardEvent>> = {
     replenish: {
         name: "replenish",
         hooks: [

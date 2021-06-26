@@ -1,13 +1,13 @@
-import { GameEventType, GameEventHandler } from "./event";
+import { GameEventType, GameEventHandler, GameEvent } from "./event";
 
-export type CardEffectName = "replenish" | "heal";
+export type GameEffectName = "replenish" | "heal";
 
-export type CardEffect = {
-    name: CardEffectName;
-    hooks: CardEffectHook[];
+export type GameEffect<T extends GameEvent = GameEvent> = {
+    name: GameEffectName;
+    hooks: GameEffectHook<T>[];
 };
 
-export type CardEffectHook = {
+export type GameEffectHook<T extends GameEvent = GameEvent> = {
     listen: GameEventType;
-    handle: GameEventHandler;
+    handle: GameEventHandler<T>;
 };

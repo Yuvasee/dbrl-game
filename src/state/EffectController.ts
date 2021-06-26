@@ -1,13 +1,14 @@
-import { effects } from "data/effects";
-import { EventBusSubscriber } from "types";
+import { cardEffects } from "data/effects";
+import { GameEventHandler } from "types";
+import { EventBus } from "./EventBus";
 
 export class EffectController {
     private unsubscribers: (() => void)[] = [];
 
-    constructor(onEvent: EventBusSubscriber) {
-        Object.values(effects).forEach((effect) =>
+    constructor(eventBus: EventBus) {
+        Object.values(cardEffects).forEach((effect) =>
             effect.hooks.forEach((hook) =>
-                this.unsubscribers.push(onEvent(hook.listen, hook.handle))
+                this.unsubscribers.push(eventBus.on(hook.listen, hook.handle as GameEventHandler))
             )
         );
     }

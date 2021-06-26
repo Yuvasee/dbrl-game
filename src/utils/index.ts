@@ -1,7 +1,7 @@
 import rand from "math-random";
 import { useRef, useEffect } from "react";
 
-import { EventType } from "types";
+import { GameEvent } from "types";
 
 import { VariableValue } from "types/generic";
 
@@ -19,6 +19,6 @@ export const usePrevious = <T>(value: T): T => {
     return ref.current;
 };
 
-export const logEvent = (event: EventType) => {
+export const logEvent = (event: GameEvent) => {
     console.log('Event "%s" emitted: %o', event.type, event.payload);
 };
